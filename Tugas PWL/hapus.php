@@ -1,5 +1,4 @@
 <?php
-// hapus.php - Hapus Barang (Skema Lengkap + PDO)
 session_start();
 require_once 'config.php';
 
@@ -11,7 +10,7 @@ if (!isset($_GET['id'])) {
 $id = (int)$_GET['id'];
 
 try {
-    // 1. Ambil nama file foto sebelum dihapus dari DB
+ 
     $stmt_select = $pdo->prepare("SELECT nama_barang, foto FROM barang WHERE id_barang = ?");
     $stmt_select->execute([$id]);
     $row = $stmt_select->fetch();
@@ -19,12 +18,10 @@ try {
     if ($row) {
         $nama_barang = $row['nama_barang'];
         
-        // 2. Hapus file foto dari folder fisik jika ada
         if ($row['foto'] && file_exists('uploads/' . $row['foto'])) {
             unlink('uploads/' . $row['foto']);
         }
 
-        // 3. Hapus data dari database
         $stmt_delete = $pdo->prepare("DELETE FROM barang WHERE id_barang = ?");
         $stmt_delete->execute([$id]);
 
