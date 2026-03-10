@@ -1,5 +1,4 @@
 <?php
-// view.php - Detail Barang (Skema Lengkap + PDO)
 session_start();
 require_once 'config.php';
 
