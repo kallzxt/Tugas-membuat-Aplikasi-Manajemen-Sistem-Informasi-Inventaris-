@@ -1,5 +1,4 @@
 <?php
-// edit.php - Edit Barang (Skema Lengkap + PDO)
 session_start();
 require_once 'config.php';
 
@@ -34,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $keterangan = trim($_POST['keterangan']);
 
-    // Cek duplikasi kode barang (kecuali barang ini sendiri)
     $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM barang WHERE kode_barang = ? AND id_barang != ?");
     $stmt_check->execute([$kode_barang, $id]);
     if ($stmt_check->fetchColumn() > 0) {
