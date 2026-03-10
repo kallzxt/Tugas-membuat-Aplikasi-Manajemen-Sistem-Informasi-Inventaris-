@@ -1,5 +1,4 @@
 <?php
-// config.php - Konfigurasi Database PDO
 $host = 'localhost';
 $db   = 'inventory_db';
 $user = 'root';
@@ -19,3 +18,4 @@ try {
     die("Koneksi Database Gagal: " . $e->getMessage());
 }
 ?>
+
