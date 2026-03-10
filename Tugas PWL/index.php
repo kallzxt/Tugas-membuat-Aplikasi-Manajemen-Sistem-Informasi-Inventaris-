@@ -1,20 +1,16 @@
 <?php
-// index.php - Daftar Inventaris (Skema Lengkap + PDO)
 session_start();
 require_once 'config.php';
 
-// Paginasi
 $limit = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page > 1) ? ($page * $limit) - $limit : 0;
 
-// Pencarian dan Sorting
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'id_barang';
 $order = isset($_GET['order']) ? $_GET['order'] : 'DESC';
 
 try {
-    // Query SQL
     $sql = "SELECT * FROM barang WHERE 
             nama_barang LIKE :search OR 
             kode_barang LIKE :search 
@@ -27,7 +23,6 @@ try {
     $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Hitung total untuk paginasi
     $count_sql = "SELECT COUNT(*) FROM barang WHERE 
                   nama_barang LIKE :search OR 
                   kode_barang LIKE :search";
@@ -149,7 +144,6 @@ try {
                     </table>
                 </div>
 
-                <!-- Paginasi -->
                 <?php if ($total_pages > 1): ?>
                     <nav class="mt-4">
                         <ul class="pagination justify-content-center pagination-sm">
