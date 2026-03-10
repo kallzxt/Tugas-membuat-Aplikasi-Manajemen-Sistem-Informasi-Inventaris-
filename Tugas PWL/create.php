@@ -1,12 +1,10 @@
 <?php
-// create.php - Tambah Barang (Lengkap + PDO)
 session_start();
 require_once 'config.php';
 
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitasi dan Validasi Dasar
     $kode_barang = trim($_POST['kode_barang']);
     $nama_barang = trim($_POST['nama_barang']);
     $satuan = $_POST['satuan'];
@@ -16,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tanggal_masuk = $_POST['tanggal_masuk'];
     $keterangan = trim($_POST['keterangan']);
 
-    // Cek duplikasi kode barang
+    
     $stmt_check = $pdo->prepare("SELECT COUNT(*) FROM barang WHERE kode_barang = ?");
     $stmt_check->execute([$kode_barang]);
     if ($stmt_check->fetchColumn() > 0) {
@@ -24,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (!$error) {
-        // Penanganan Foto
         $new_foto_name = "";
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
             $foto_name = $_FILES['foto']['name'];
@@ -59,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 exit;
             } catch (PDOException $e) {
                 $error = "Ralat Database: " . $e->getMessage();
-                // Hapus foto jika DB gagal
                 if ($new_foto_name && file_exists('uploads/' . $new_foto_name)) unlink('uploads/' . $new_foto_name);
             }
         }
